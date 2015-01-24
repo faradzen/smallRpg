@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cApp.PositiveT.Rpg", "cApp.PositiveT.Rpg\cApp.PositiveT.Rpg.csproj", "{ED73679C-1DEB-4D1D-8BDF-7B729CED62E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rpg.Test", "Rpg.Test\Rpg.Test.csproj", "{08FA415F-40B0-4FC3-A987-A359B409E14D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{ED73679C-1DEB-4D1D-8BDF-7B729CED62E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED73679C-1DEB-4D1D-8BDF-7B729CED62E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED73679C-1DEB-4D1D-8BDF-7B729CED62E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08FA415F-40B0-4FC3-A987-A359B409E14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08FA415F-40B0-4FC3-A987-A359B409E14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08FA415F-40B0-4FC3-A987-A359B409E14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08FA415F-40B0-4FC3-A987-A359B409E14D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

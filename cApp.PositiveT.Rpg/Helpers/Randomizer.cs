@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Rpg.Test")]
 namespace cApp.PositiveT.Rpg.Helpers
 {
-    static class Randomizer
+   
+    internal static class Randomizer
     {
         private static readonly Random Rnd;
 

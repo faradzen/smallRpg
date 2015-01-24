@@ -15,8 +15,7 @@ namespace cApp.PositiveT.Rpg
 
         public Armor()
         {
-            Defence = Randomizer.GetSome(Configuration.ArmorDefenceMax);
-            
+            Defence = Randomizer.GetSome(Configuration.ArmorDefenceMax + 1);     
         }
     }
 }

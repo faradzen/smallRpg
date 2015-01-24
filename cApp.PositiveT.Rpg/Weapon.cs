@@ -15,7 +15,7 @@ namespace cApp.PositiveT.Rpg
 
         public Weapon()
         {
-            Attack = Randomizer.GetSome(Configuration.WeaponAttackMax);
+            Attack = Randomizer.GetSome(Configuration.WeaponAttackMax + 1);
         }
     }
 }
