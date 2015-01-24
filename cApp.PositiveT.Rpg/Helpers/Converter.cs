@@ -7,19 +7,22 @@ namespace cApp.PositiveT.Rpg.Helpers
     {
         internal static HeroConfig GetHeroConfig()
         {
-            var src = new HeroConfig();
-            src.HealHitPoints = Configuration.HealHitPoints;
-            src.HealRestHitPoints = Configuration.HealRestHitPoints;
-            src.HealCost = Configuration.HealCost;
-            src.MonsterDamageAfterWin = Configuration.MonsterDamageAfterWin;
-            src.MonsterDamageAfterFail = Configuration.MonsterDamageAfterFail;
-            src.HeroDefaultWinChance = Configuration.HeroDefaultWinChance;
-            src.HeroMightFactor = Configuration.HeroMightFactor;
-            src.HeroMaxWinChance = Configuration.HeroMaxWinChance;
-            src.HeroMaxHitPoints = Configuration.HeroMaxHitPoints;
-            src.HeroStartHitPoints = Configuration.HeroStartHitPoints;
-            src.HeroMight = Configuration.HeroMight;
-            src.HeroMoney = Configuration.HeroMoney;
+            var src = new HeroConfig
+                      {
+                          HealHitPoints = Configuration.HealHitPoints,
+                          HealRestHitPoints = Configuration.HealRestHitPoints,
+                          HealCost = Configuration.HealCost,
+                          MonsterDamageAfterWinInProcent = Configuration.MonsterDamageAfterWin,
+                          MonsterDamageAfterFail = Configuration.MonsterDamageAfterFail,
+                          MonsterMoney = Configuration.MonsterMoney,
+                          HeroDefaultWinChance = Configuration.HeroDefaultWinChance,
+                          HeroMightFactor = Configuration.HeroMightFactor,
+                          HeroMaxWinChance = Configuration.HeroMaxWinChance,
+                          HeroMaxHitPoints = Configuration.HeroMaxHitPoints,
+                          HeroStartHitPoints = Configuration.HeroStartHitPoints,
+                          HeroMight = Configuration.HeroMight,
+                          HeroMoney = Configuration.HeroMoney
+                      };
             return src;
         }
     }

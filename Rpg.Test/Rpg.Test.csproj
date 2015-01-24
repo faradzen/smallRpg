@@ -51,6 +51,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\RandomizerTest.cs" />
+    <Compile Include="Infrastruct\HeroConfigForTest.cs" />
+    <Compile Include="Infrastruct\MessengerForTest.cs" />
+    <Compile Include="Model\HeroTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

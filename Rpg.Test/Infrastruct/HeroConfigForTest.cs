@@ -1,6 +1,9 @@
-﻿namespace cApp.PositiveT.Rpg.Infrastruct
+﻿
+using cApp.PositiveT.Rpg.Infrastruct;
+
+namespace Rpg.Test.Infrastruct
 {
-    public class HeroConfig : IHeroConfig
+    class HeroConfigForTest : IHeroConfig
     {
         public int HealHitPoints { get; set; }
         public int HealRestHitPoints { get; set; }

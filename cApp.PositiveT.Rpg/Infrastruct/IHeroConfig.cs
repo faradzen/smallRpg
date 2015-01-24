@@ -6,8 +6,9 @@ namespace cApp.PositiveT.Rpg.Infrastruct
         int HealHitPoints { get; }
         int HealRestHitPoints { get; }
         int HealCost { get; }
-        int MonsterDamageAfterWin { get; }
+        int MonsterDamageAfterWinInProcent { get; }
         int MonsterDamageAfterFail { get; }
+        int MonsterMoney { get; }
         int HeroDefaultWinChance { get; }
         int HeroMightFactor { get; }
         int HeroMaxWinChance { get; }

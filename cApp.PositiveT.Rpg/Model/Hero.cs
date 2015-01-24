@@ -5,7 +5,7 @@ using cApp.PositiveT.Rpg.Infrastruct;
 
 namespace cApp.PositiveT.Rpg.Model
 {
-    class Hero
+    internal class Hero
     {
         private readonly IMessenger _msg;
 
@@ -21,11 +21,12 @@ namespace cApp.PositiveT.Rpg.Model
         private readonly int _healCost;
         private readonly int _healMight;
         private readonly int _healRestMight;
-        private readonly int _monsterDamageAfterWin;
+        private readonly int _monsterDamageAfterWinInProcent;
         private readonly int _heroDefaultWinChance;
         private readonly int _heroMightFactor;
         private readonly int _heroMaxWinChance;
         private readonly int _monsterDamageAfterFail;
+        private readonly int _monsterMoney;
         private int _days;
 
         public Hero(IMessenger messenger, IHeroConfig config)
@@ -34,11 +35,12 @@ namespace cApp.PositiveT.Rpg.Model
             _healMight = config.HealHitPoints;
             _healRestMight = config.HealRestHitPoints;
             _healCost = config.HealCost;
-            _monsterDamageAfterWin = config.MonsterDamageAfterWin;
+            _monsterDamageAfterWinInProcent = config.MonsterDamageAfterWinInProcent;
             _heroDefaultWinChance = config.HeroDefaultWinChance;
             _heroMightFactor = config.HeroMightFactor;
             _heroMaxWinChance = config.HeroMaxWinChance;
             _monsterDamageAfterFail = config.MonsterDamageAfterFail;
+            _monsterMoney = config.MonsterMoney;
             InitHero(config);
         }
 
@@ -79,31 +81,35 @@ namespace cApp.PositiveT.Rpg.Model
             return Randomizer.GetSome(100) <= minChance;
         }
 
-        public void Fight()
+        public bool? Fight()
         {
             if (IsDead)
             {
                 _msg.Write("Ты умер, родной, хватит драться. Сходи водички попей...живой.");
-                return;
+                return null;
             }
             int dmg;
+            bool isKill;
             if (IsMonsterKilled())
             {
-                var dmg1 = Math.Round((double)HitPoints / _monsterDamageAfterWin, MidpointRounding.AwayFromZero);
+                var dmg1 = Math.Round((((double)HitPoints / 100) * _monsterDamageAfterWinInProcent), MidpointRounding.AwayFromZero);
                 dmg = (int)dmg1;
                 Damage(dmg);
-                Money += 5;
+                Money += _monsterMoney;
                 _msg.Write("Ура! Пляшем ритуальный танец и собираем добычу...");
+                isKill = true;
             }
             else
             {
                 _msg.Write("ааа!....проклятые светлоухие жулики...опять получил по щам.");
                 dmg = _monsterDamageAfterFail;
                 Damage(dmg);
+                isKill = false;
             }
             _msg.Write(String.Format("получено повреждений:{0}", dmg));
             PrintHeroInfo();
             _days++;
+            return isKill;
         }
 
         public void BuyArmor()
