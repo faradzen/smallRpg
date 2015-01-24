@@ -18,31 +18,41 @@ namespace cApp.PositiveT.Rpg
         public bool IsDead { get; private set; }
         private int _summaryItemsAttack;
         private int _summaryItemsDefence;
-        private int _healCost;
-        private int _healMight;
-        private int _healRestMight;
+        private readonly int _healCost;
+        private readonly int _healMight;
+        private readonly int _healRestMight;
+        private readonly int _monsterDamageAfterWin;
+        private readonly int _heroDefaultWinChance;
+        private readonly int _heroMightFactor;
+        private readonly int _heroMaxWinChance;
+        private readonly int _monsterDamageAfterFail;
         private int _days;
 
-        public Hero(IMessenger messenger)
+        public Hero(IMessenger messenger, IHeroConfig config)
         {
             _msg = messenger;
-            _healMight = Configuration.HealHitPoints;
-            _healRestMight = Configuration.HealRestHitPoints;
-            _healCost = Configuration.HealCost;
-            InitHero();
+            _healMight = config.HealHitPoints;
+            _healRestMight = config.HealRestHitPoints;
+            _healCost = config.HealCost;
+            _monsterDamageAfterWin = config.MonsterDamageAfterWin;
+            _heroDefaultWinChance = config.HeroDefaultWinChance;
+            _heroMightFactor = config.HeroMightFactor;
+            _heroMaxWinChance = config.HeroMaxWinChance;
+            _monsterDamageAfterFail = config.MonsterDamageAfterFail;
+            InitHero(config);
         }
 
         /// <summary>
         /// создать или оживить героя.
         /// </summary>
-        public void InitHero()
+        public void InitHero(IHeroConfig config)
         {
             Armors = new List<Armor>();
             Weapons = new List<Weapon>();
-            HitPointsMax = Configuration.HeroMaxHitPoints;
-            HitPoints = Configuration.HeroStartHitPoints;
-            Might = Configuration.HeroMight;
-            Money = Configuration.HeroMoney;
+            HitPointsMax = config.HeroMaxHitPoints;
+            HitPoints = config.HeroStartHitPoints;
+            Might = config.HeroMight;
+            Money = config.HeroMoney;
             _summaryItemsAttack = 0;
             _summaryItemsDefence = 0;
             _days = 0;
@@ -57,15 +67,15 @@ namespace cApp.PositiveT.Rpg
                 HitPointsMax, (Might + _summaryItemsAttack), _summaryItemsDefence, Money, _days));
             if (IsDead)
             {
-                _msg.Write("Статус : ЗОМБИ ");
+                _msg.Write("Статус : помер ");
             }
         }
 
         private bool IsMonsterKilled()
         {
-            var maxChance = Configuration.HeroDefaultWinChance +
-                            (Might + _summaryItemsAttack) * Configuration.HeroMightFactor;
-            var minChance = Math.Min(maxChance, Configuration.HeroMaxWinChance);
+            var maxChance = _heroDefaultWinChance +
+                            (Might + _summaryItemsAttack) * _heroMightFactor;
+            var minChance = Math.Min(maxChance, _heroMaxWinChance);
             return Randomizer.GetSome(100) <= minChance;
         }
 
@@ -79,7 +89,7 @@ namespace cApp.PositiveT.Rpg
             int dmg;
             if (IsMonsterKilled())
             {
-                var dmg1 = Math.Round((double)HitPoints / Configuration.MonsterDamageAfterWin, MidpointRounding.AwayFromZero);
+                var dmg1 = Math.Round((double)HitPoints / _monsterDamageAfterWin, MidpointRounding.AwayFromZero);
                 dmg = (int)dmg1;
                 Damage(dmg);
                 Money += 5;
@@ -88,7 +98,7 @@ namespace cApp.PositiveT.Rpg
             else
             {
                 _msg.Write("ааа!....проклятые светлоухие жулики...опять получил по щам.");
-                dmg = Configuration.MonsterDamageAfterFail;
+                dmg = _monsterDamageAfterFail;
                 Damage(dmg);
             }
             _msg.Write(String.Format("получено повреждений:{0}", dmg));
@@ -111,6 +121,7 @@ namespace cApp.PositiveT.Rpg
             var newArmor = new Armor();
             Armors.Add(newArmor);
             _summaryItemsDefence += newArmor.Defence;
+            HitPointsMax += newArmor.Defence;
             Money -= Armor.Cost;
             if (newArmor.Defence > 1)
             {
@@ -118,7 +129,7 @@ namespace cApp.PositiveT.Rpg
             }
             else
             {
-                _msg.Write("перековываем, дорабатываем, допиливаем железки");
+                _msg.Write("еще одна обвесочка!");
             }
             PrintHeroInfo();
             _days++;
@@ -146,7 +157,7 @@ namespace cApp.PositiveT.Rpg
             }
             else
             {
-                _msg.Write("точим-точим ножик ночью темной...");
+                _msg.Write("ножичек засиял ярче");
             }
             PrintHeroInfo();
             _days++;
@@ -195,9 +206,8 @@ namespace cApp.PositiveT.Rpg
         private void Heal(int amount)
         {
             var newHitPointsValue = HitPoints + amount;
-            var maxHits = HitPointsMax + _summaryItemsDefence;
-            HitPoints = newHitPointsValue > maxHits
-                ? maxHits
+            HitPoints = newHitPointsValue > HitPointsMax
+                ? HitPointsMax
                 : newHitPointsValue;
         }
 

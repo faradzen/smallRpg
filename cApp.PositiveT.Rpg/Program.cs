@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using cApp.PositiveT.Rpg.Helpers;
 using cApp.PositiveT.Rpg.Infrastruct;
 
 namespace cApp.PositiveT.Rpg
@@ -60,7 +61,8 @@ namespace cApp.PositiveT.Rpg
 
             //initialize units
             var messenger = new Messenger();
-            var hero = new Hero(messenger);
+            var heroConfig = Factory.GetHeroConfig();
+            var hero = new Hero(messenger, heroConfig);
             var isEnd = false;
 
             //run game
@@ -109,7 +111,7 @@ namespace cApp.PositiveT.Rpg
                     }
                     else
                     {
-                        hero.InitHero();
+                        hero.InitHero(heroConfig);
                     }
                 }
 

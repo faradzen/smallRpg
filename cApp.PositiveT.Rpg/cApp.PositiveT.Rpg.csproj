@@ -43,8 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Armor.cs" />
+    <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\Randomizer.cs" />
     <Compile Include="Hero.cs" />
+    <Compile Include="Infrastruct\HeroConfig.cs" />
+    <Compile Include="Infrastruct\IHeroConfig.cs" />
     <Compile Include="Infrastruct\IMessenger.cs" />
     <Compile Include="Infrastruct\Messenger.cs" />
     <Compile Include="Program.cs" />
