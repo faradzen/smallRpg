@@ -8,7 +8,7 @@ namespace cApp.PositiveT.Rpg
     class Hero
     {
         private readonly IMessenger _msg;
-        
+
         public int HitPointsMax { get; private set; }
         public int HitPoints { get; private set; }
         public int Might { get; private set; }
@@ -21,8 +21,6 @@ namespace cApp.PositiveT.Rpg
         private int _healCost;
         private int _healMight;
         private int _healRestMight;
-        private int _weaponCost;
-        private int _armorCost;
         private int _days;
 
         public Hero(IMessenger messenger)
@@ -31,8 +29,6 @@ namespace cApp.PositiveT.Rpg
             _healMight = Configuration.HealHitPoints;
             _healRestMight = Configuration.HealRestHitPoints;
             _healCost = Configuration.HealCost;
-            _weaponCost = Configuration.WeaponCost;
-            _armorCost = Configuration.ArmorCost;
             InitHero();
         }
 
@@ -57,8 +53,8 @@ namespace cApp.PositiveT.Rpg
 
         public void PrintHeroInfo()
         {
-            _msg.Write(String.Format("сводка: жизнь={0}/{1}, мощь = {2}, броня = {3}, золото = {4} ", HitPoints,
-                HitPointsMax, (Might + _summaryItemsAttack), _summaryItemsDefence, Money));
+            _msg.Write(String.Format("сводка за день {5}: жизнь={0}/{1}, мощь = {2}, броня = {3}, золото = {4} ", HitPoints,
+                HitPointsMax, (Might + _summaryItemsAttack), _summaryItemsDefence, Money, _days));
             if (IsDead)
             {
                 _msg.Write("Статус : ЗОМБИ ");
@@ -105,14 +101,17 @@ namespace cApp.PositiveT.Rpg
             if (IsDead)
             {
                 _msg.Write("Кыш отседова, нежить мелкая!");
+                return;
             }
-            if ((Money - _armorCost) < 0)
+            if (Money < Armor.Cost || (Money - Armor.Cost) < 0)
             {
                 _msg.Write("эх, денег не хватает..");
+                return;
             }
             var newArmor = new Armor();
             Armors.Add(newArmor);
             _summaryItemsDefence += newArmor.Defence;
+            Money -= Armor.Cost;
             if (newArmor.Defence > 1)
             {
                 _msg.Write(String.Format("эх хороша кольчужка...добавил {0} к броне", newArmor.Defence));
@@ -130,14 +129,17 @@ namespace cApp.PositiveT.Rpg
             if (IsDead)
             {
                 _msg.Write("Уходи, уходи давай...досвидания!");
+                return;
             }
-            if ((Money - _weaponCost) < 0)
+            if (Money < Weapon.Cost || (Money - Weapon.Cost) < 0)
             {
                 _msg.Write("Нет денег - нет мечей!");
+                return;
             }
             var newWeapon = new Weapon();
             Weapons.Add(newWeapon);
             _summaryItemsAttack += newWeapon.Attack;
+            Money -= Weapon.Cost;
             if (newWeapon.Attack > 1)
             {
                 _msg.Write(String.Format("хо-хо...новая фенечка на ножичек..аж {0} к мощи", newWeapon.Attack));
@@ -174,9 +176,10 @@ namespace cApp.PositiveT.Rpg
                 _msg.Write("Извини, любезный, нежить не лечим.");
                 return;
             }
-            if ((Money - _healCost) < 0)
+            if (Money < _healCost || (Money - _healCost) < 0)
             {
                 _msg.Write("Извини, любезный, денег в долг не даем, без денег не лечим.");
+                return;
             }
             Heal(_healMight);
             Money -= _healCost;

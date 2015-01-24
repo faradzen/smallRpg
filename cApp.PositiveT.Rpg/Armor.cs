@@ -6,12 +6,17 @@ namespace cApp.PositiveT.Rpg
     class Armor
     {
         public int Defence { get; private set; }
-        public int Cost { get; private set; }
+        public static int Cost { get; private set; }
+
+        static Armor()
+        {
+            Cost = Configuration.ArmorCost;
+        }
 
         public Armor()
         {
             Defence = Randomizer.GetSome(Configuration.ArmorDefenceMax);
-            Cost = Configuration.ArmorCost;
+            
         }
     }
 }
