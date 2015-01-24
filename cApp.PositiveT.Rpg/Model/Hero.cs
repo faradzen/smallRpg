@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using cApp.PositiveT.Rpg.Helpers;
 using cApp.PositiveT.Rpg.Infrastruct;
 
-namespace cApp.PositiveT.Rpg
+namespace cApp.PositiveT.Rpg.Model
 {
     class Hero
     {
@@ -170,6 +170,11 @@ namespace cApp.PositiveT.Rpg
                 _msg.Write("нежить тоже хочет отдыхать...");
                 return;
             }
+            if (HitPoints.Equals(HitPointsMax))
+            {
+                _msg.Write("Зачем отдыхать? Пора в бой!");
+                return;
+            }
             if (HitPoints > HitPointsMax * 0.7)
             {
                 _msg.Write("хмм...да я отдохнул вроде как...может в бой?");
@@ -185,6 +190,11 @@ namespace cApp.PositiveT.Rpg
             if (HitPoints < 0)
             {
                 _msg.Write("Извини, любезный, нежить не лечим.");
+                return;
+            }
+            if (HitPoints.Equals(HitPointsMax))
+            {
+                _msg.Write("Пациент, вы полностью здоровы!");
                 return;
             }
             if (Money < _healCost || (Money - _healCost) < 0)

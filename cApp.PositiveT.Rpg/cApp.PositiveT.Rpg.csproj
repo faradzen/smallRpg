@@ -42,10 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Armor.cs" />
+    <Compile Include="Model\Armor.cs" />
     <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\Randomizer.cs" />
-    <Compile Include="Hero.cs" />
+    <Compile Include="Model\Hero.cs" />
     <Compile Include="Infrastruct\HeroConfig.cs" />
     <Compile Include="Infrastruct\IHeroConfig.cs" />
     <Compile Include="Infrastruct\IMessenger.cs" />
@@ -53,14 +53,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastruct\Configuration.cs" />
-    <Compile Include="Weapon.cs" />
+    <Compile Include="Model\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

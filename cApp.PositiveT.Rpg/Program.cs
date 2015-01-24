@@ -2,6 +2,7 @@
 using System.Linq;
 using cApp.PositiveT.Rpg.Helpers;
 using cApp.PositiveT.Rpg.Infrastruct;
+using cApp.PositiveT.Rpg.Model;
 
 namespace cApp.PositiveT.Rpg
 {

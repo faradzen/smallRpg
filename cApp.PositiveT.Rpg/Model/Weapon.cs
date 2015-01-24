@@ -1,7 +1,7 @@
 using cApp.PositiveT.Rpg.Helpers;
 using cApp.PositiveT.Rpg.Infrastruct;
 
-namespace cApp.PositiveT.Rpg
+namespace cApp.PositiveT.Rpg.Model
 {
     class Weapon
     {
