@@ -73,11 +73,16 @@ namespace cApp.PositiveT.Rpg.Model
             }
         }
 
+        private int CalcCurrentChance()
+        {
+            return _heroDefaultWinChance +
+                            (Might + _summaryItemsAttack) * _heroMightFactor;
+        }
+
         private bool IsMonsterKilled()
         {
-            var maxChance = _heroDefaultWinChance +
-                            (Might + _summaryItemsAttack) * _heroMightFactor;
-            var minChance = Math.Min(maxChance, _heroMaxWinChance);
+            var currentChance = CalcCurrentChance();
+            var minChance = Math.Min(currentChance, _heroMaxWinChance);
             return Randomizer.GetSome(100) <= minChance;
         }
 
@@ -112,18 +117,18 @@ namespace cApp.PositiveT.Rpg.Model
             return isKill;
         }
 
-        public void BuyArmor()
+        public bool BuyArmor()
         {
 
             if (IsDead)
             {
                 _msg.Write("Кыш отседова, нежить мелкая!");
-                return;
+                return false;
             }
             if (Money < Armor.Cost || (Money - Armor.Cost) < 0)
             {
                 _msg.Write("эх, денег не хватает..");
-                return;
+                return false;
             }
             var newArmor = new Armor();
             Armors.Add(newArmor);
@@ -140,19 +145,25 @@ namespace cApp.PositiveT.Rpg.Model
             }
             PrintHeroInfo();
             _days++;
+            return true;
         }
 
-        public void BuyWeapon()
+        public bool BuyWeapon()
         {
             if (IsDead)
             {
                 _msg.Write("Уходи, уходи давай...досвидания!");
-                return;
+                return false;
             }
             if (Money < Weapon.Cost || (Money - Weapon.Cost) < 0)
             {
                 _msg.Write("Нет денег - нет мечей!");
-                return;
+                return false;
+            }
+            if (CalcCurrentChance() >= _heroMaxWinChance)
+            {
+                _msg.Write("нет смысла больше оружия брать...боги не дадут стать сильней.");
+                return false;
             }
             var newWeapon = new Weapon();
             Weapons.Add(newWeapon);
@@ -168,6 +179,7 @@ namespace cApp.PositiveT.Rpg.Model
             }
             PrintHeroInfo();
             _days++;
+            return false;
         }
 
         public void Rest()
@@ -192,22 +204,22 @@ namespace cApp.PositiveT.Rpg.Model
             _days++;
         }
 
-        public void Healing()
+        public bool Healing()
         {
             if (HitPoints < 0)
             {
                 _msg.Write("Извини, любезный, нежить не лечим.");
-                return;
+                return false;
             }
             if (HitPoints.Equals(HitPointsMax))
             {
                 _msg.Write("Пациент, вы полностью здоровы!");
-                return;
+                return false;
             }
             if (Money < _healCost || (Money - _healCost) < 0)
             {
                 _msg.Write("Извини, любезный, денег в долг не даем, без денег не лечим.");
-                return;
+                return false;
             }
             Heal(_healMight);
             Money -= _healCost;
@@ -218,6 +230,39 @@ namespace cApp.PositiveT.Rpg.Model
             }
             PrintHeroInfo();
             _days++;
+            return true;
+        }
+
+        public void DoSomething()
+        {
+            if (HitPoints <= _monsterDamageAfterFail)
+            {
+                //need healing
+                if (Money > _healCost 
+                    && (double)_monsterDamageAfterFail - HitPoints > _healMight )
+                {
+                    Healing();
+                }
+                else
+                {
+                    Rest();
+                }
+                return;
+            }
+            if (Money > Weapon.Cost && CalcCurrentChance() < _heroMaxWinChance)
+            {
+                //first increase chance of win. 
+                //after come to max hero chance we could incrase defence 
+                BuyWeapon();
+                return;
+            }
+            if (Money > Armor.Cost
+                && (double)Money / _healCost > ((double)_monsterDamageAfterFail / _healMight))
+            {
+                BuyArmor();
+                return;
+            }
+            Fight();
         }
 
         private void Heal(int amount)
@@ -230,7 +275,7 @@ namespace cApp.PositiveT.Rpg.Model
 
         private void Damage(int dmg)
         {
-            if ((HitPoints - dmg) < 0)
+            if ((HitPoints - dmg) <= 0)
             {
                 //dead
                 HitPoints = 0;

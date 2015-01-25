@@ -21,7 +21,8 @@ namespace cApp.PositiveT.Rpg
             BuyArmor = 'd',
             Heal = 's',
             Help = 'h',
-            Rest = 'q'
+            Rest = 'q',
+            GenerateAction = 'e'
         }
 
         static class Keys
@@ -33,7 +34,8 @@ namespace cApp.PositiveT.Rpg
                 (char) ActionType.BuyWeapon,
                 (char) ActionType.Heal,
                 (char) ActionType.Help,
-                (char) ActionType.Rest
+                (char) ActionType.Rest,
+                (char) ActionType.GenerateAction
             };
 
             public static char[] Response =
@@ -95,6 +97,9 @@ namespace cApp.PositiveT.Rpg
                         break;
                     case ActionType.Rest:
                         hero.Rest();
+                        break;
+                    case ActionType.GenerateAction:
+                        hero.DoSomething();
                         break;
                     default:
                         Console.WriteLine("и не надо нажмать на все подряд");
