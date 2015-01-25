@@ -7,6 +7,7 @@ namespace cApp.PositiveT.Rpg.Model
 {
     internal class Hero
     {
+
         private readonly IMessenger _msg;
 
         public int HitPointsMax { get; private set; }
