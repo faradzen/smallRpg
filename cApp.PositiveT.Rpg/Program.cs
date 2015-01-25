@@ -13,6 +13,7 @@ namespace cApp.PositiveT.Rpg
         No = 'n'
     }
 
+
     public enum ActionType
     {
         Fight = 'w',

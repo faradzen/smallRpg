@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using cApp.PositiveT.Rpg.Helpers;
 using cApp.PositiveT.Rpg.Infrastruct;
@@ -45,7 +45,7 @@ namespace cApp.PositiveT.Rpg.Model
         }
 
         /// <summary>
-        /// создать или оживить героя.
+        /// СЃРѕР·РґР°С‚СЊ РёР»Рё РѕР¶РёРІРёС‚СЊ РіРµСЂРѕСЏ.
         /// </summary>
         public void InitHero(IHeroConfig config)
         {
@@ -60,16 +60,17 @@ namespace cApp.PositiveT.Rpg.Model
             _days = 0;
             IsDead = false;
             _msg.Write("================================================================================");
-            _msg.Write("Из глубоких пучин, из дремучих лесов вышел на тропу войны простой солдат сил тьмы...");
+            _msg.Write("РР· РіР»СѓР±РѕРєРёС… РїСѓС‡РёРЅ, РёР· РґСЂРµРјСѓС‡РёС… Р»РµСЃРѕРІ РІС‹С€РµР» РЅР° С‚СЂРѕРїСѓ РІРѕР№РЅС‹ РїСЂРѕСЃС‚РѕР№ СЃРѕР»РґР°С‚ СЃРёР» С‚СЊРјС‹...");
         }
+
 
         public void PrintHeroInfo()
         {
-            _msg.Write(String.Format("сводка за день {5}: жизнь={0}/{1}, мощь = {2}, броня = {3}, золото = {4} ", HitPoints,
+            _msg.Write(String.Format("СЃРІРѕРґРєР° Р·Р° РґРµРЅСЊ {5}: Р¶РёР·РЅСЊ={0}/{1}, РјРѕС‰СЊ = {2}, Р±СЂРѕРЅСЏ = {3}, Р·РѕР»РѕС‚Рѕ = {4} ", HitPoints,
                 HitPointsMax, (Might + _summaryItemsAttack), _summaryItemsDefence, Money, _days));
             if (IsDead)
             {
-                _msg.Write("Статус : помер ");
+                _msg.Write("РЎС‚Р°С‚СѓСЃ : РїРѕРјРµСЂ ");
             }
         }
 
@@ -85,7 +86,7 @@ namespace cApp.PositiveT.Rpg.Model
         {
             if (IsDead)
             {
-                _msg.Write("Ты умер, родной, хватит драться. Сходи водички попей...живой.");
+                _msg.Write("РўС‹ СѓРјРµСЂ, СЂРѕРґРЅРѕР№, С…РІР°С‚РёС‚ РґСЂР°С‚СЊСЃСЏ. РЎС…РѕРґРё РІРѕРґРёС‡РєРё РїРѕРїРµР№...Р¶РёРІРѕР№.");
                 return null;
             }
             int dmg;
@@ -96,17 +97,17 @@ namespace cApp.PositiveT.Rpg.Model
                 dmg = (int)dmg1;
                 Damage(dmg);
                 Money += _monsterMoney;
-                _msg.Write("Ура! Пляшем ритуальный танец и собираем добычу...");
+                _msg.Write("РЈСЂР°! РџР»СЏС€РµРј СЂРёС‚СѓР°Р»СЊРЅС‹Р№ С‚Р°РЅРµС† Рё СЃРѕР±РёСЂР°РµРј РґРѕР±С‹С‡Сѓ...");
                 isKill = true;
             }
             else
             {
-                _msg.Write("ааа!....проклятые светлоухие жулики...опять получил по щам.");
+                _msg.Write("Р°Р°Р°!....РїСЂРѕРєР»СЏС‚С‹Рµ СЃРІРµС‚Р»РѕСѓС…РёРµ Р¶СѓР»РёРєРё...РѕРїСЏС‚СЊ РїРѕР»СѓС‡РёР» РїРѕ С‰Р°Рј.");
                 dmg = _monsterDamageAfterFail;
                 Damage(dmg);
                 isKill = false;
             }
-            _msg.Write(String.Format("получено повреждений:{0}", dmg));
+            _msg.Write(String.Format("РїРѕР»СѓС‡РµРЅРѕ РїРѕРІСЂРµР¶РґРµРЅРёР№:{0}", dmg));
             PrintHeroInfo();
             _days++;
             return isKill;
@@ -114,14 +115,15 @@ namespace cApp.PositiveT.Rpg.Model
 
         public void BuyArmor()
         {
+
             if (IsDead)
             {
-                _msg.Write("Кыш отседова, нежить мелкая!");
+                _msg.Write("РљС‹С€ РѕС‚СЃРµРґРѕРІР°, РЅРµР¶РёС‚СЊ РјРµР»РєР°СЏ!");
                 return;
             }
             if (Money < Armor.Cost || (Money - Armor.Cost) < 0)
             {
-                _msg.Write("эх, денег не хватает..");
+                _msg.Write("СЌС…, РґРµРЅРµРі РЅРµ С…РІР°С‚Р°РµС‚..");
                 return;
             }
             var newArmor = new Armor();
@@ -131,11 +133,11 @@ namespace cApp.PositiveT.Rpg.Model
             Money -= Armor.Cost;
             if (newArmor.Defence > 1)
             {
-                _msg.Write(String.Format("эх хороша кольчужка...добавил {0} к броне", newArmor.Defence));
+                _msg.Write(String.Format("СЌС… С…РѕСЂРѕС€Р° РєРѕР»СЊС‡СѓР¶РєР°...РґРѕР±Р°РІРёР» {0} Рє Р±СЂРѕРЅРµ", newArmor.Defence));
             }
             else
             {
-                _msg.Write("еще одна обвесочка!");
+                _msg.Write("РµС‰Рµ РѕРґРЅР° РѕР±РІРµСЃРѕС‡РєР°!");
             }
             PrintHeroInfo();
             _days++;
@@ -145,12 +147,12 @@ namespace cApp.PositiveT.Rpg.Model
         {
             if (IsDead)
             {
-                _msg.Write("Уходи, уходи давай...досвидания!");
+                _msg.Write("РЈС…РѕРґРё, СѓС…РѕРґРё РґР°РІР°Р№...РґРѕСЃРІРёРґР°РЅРёСЏ!");
                 return;
             }
             if (Money < Weapon.Cost || (Money - Weapon.Cost) < 0)
             {
-                _msg.Write("Нет денег - нет мечей!");
+                _msg.Write("РќРµС‚ РґРµРЅРµРі - РЅРµС‚ РјРµС‡РµР№!");
                 return;
             }
             var newWeapon = new Weapon();
@@ -159,11 +161,11 @@ namespace cApp.PositiveT.Rpg.Model
             Money -= Weapon.Cost;
             if (newWeapon.Attack > 1)
             {
-                _msg.Write(String.Format("хо-хо...новая фенечка на ножичек..аж {0} к мощи", newWeapon.Attack));
+                _msg.Write(String.Format("С…Рѕ-С…Рѕ...РЅРѕРІР°СЏ С„РµРЅРµС‡РєР° РЅР° РЅРѕР¶РёС‡РµРє..Р°Р¶ {0} Рє РјРѕС‰Рё", newWeapon.Attack));
             }
             else
             {
-                _msg.Write("ножичек засиял ярче");
+                _msg.Write("РЅРѕР¶РёС‡РµРє Р·Р°СЃРёСЏР» СЏСЂС‡Рµ");
             }
             PrintHeroInfo();
             _days++;
@@ -173,19 +175,19 @@ namespace cApp.PositiveT.Rpg.Model
         {
             if (IsDead)
             {
-                _msg.Write("нежить тоже хочет отдыхать...");
+                _msg.Write("РЅРµР¶РёС‚СЊ С‚РѕР¶Рµ С…РѕС‡РµС‚ РѕС‚РґС‹С…Р°С‚СЊ...");
                 return;
             }
             if (HitPoints.Equals(HitPointsMax))
             {
-                _msg.Write("Зачем отдыхать? Пора в бой!");
+                _msg.Write("Р—Р°С‡РµРј РѕС‚РґС‹С…Р°С‚СЊ? РџРѕСЂР° РІ Р±РѕР№!");
                 return;
             }
             if (HitPoints > HitPointsMax * 0.7)
             {
-                _msg.Write("хмм...да я отдохнул вроде как...может в бой?");
+                _msg.Write("С…РјРј...РґР° СЏ РѕС‚РґРѕС…РЅСѓР» РІСЂРѕРґРµ РєР°Рє...РјРѕР¶РµС‚ РІ Р±РѕР№?");
             }
-            _msg.Write("ромашки, одуваны...лежу в кустах я пьяный...");
+            _msg.Write("СЂРѕРјР°С€РєРё, РѕРґСѓРІР°РЅС‹...Р»РµР¶Сѓ РІ РєСѓСЃС‚Р°С… СЏ РїСЊСЏРЅС‹Р№...");
             Heal(_healRestMight);
             PrintHeroInfo();
             _days++;
@@ -195,25 +197,25 @@ namespace cApp.PositiveT.Rpg.Model
         {
             if (HitPoints < 0)
             {
-                _msg.Write("Извини, любезный, нежить не лечим.");
+                _msg.Write("РР·РІРёРЅРё, Р»СЋР±РµР·РЅС‹Р№, РЅРµР¶РёС‚СЊ РЅРµ Р»РµС‡РёРј.");
                 return;
             }
             if (HitPoints.Equals(HitPointsMax))
             {
-                _msg.Write("Пациент, вы полностью здоровы!");
+                _msg.Write("РџР°С†РёРµРЅС‚, РІС‹ РїРѕР»РЅРѕСЃС‚СЊСЋ Р·РґРѕСЂРѕРІС‹!");
                 return;
             }
             if (Money < _healCost || (Money - _healCost) < 0)
             {
-                _msg.Write("Извини, любезный, денег в долг не даем, без денег не лечим.");
+                _msg.Write("РР·РІРёРЅРё, Р»СЋР±РµР·РЅС‹Р№, РґРµРЅРµРі РІ РґРѕР»Рі РЅРµ РґР°РµРј, Р±РµР· РґРµРЅРµРі РЅРµ Р»РµС‡РёРј.");
                 return;
             }
             Heal(_healMight);
             Money -= _healCost;
-            _msg.Write("пластыри, мази, припарки, скальпели...фуу..страшно лечиться.");
+            _msg.Write("РїР»Р°СЃС‚С‹СЂРё, РјР°Р·Рё, РїСЂРёРїР°СЂРєРё, СЃРєР°Р»СЊРїРµР»Рё...С„СѓСѓ..СЃС‚СЂР°С€РЅРѕ Р»РµС‡РёС‚СЊСЃСЏ.");
             if (HitPoints == HitPointsMax)
             {
-                _msg.Write("хмм...под завязочку..а не зря ли я деньги трачу?");
+                _msg.Write("С…РјРј...РїРѕРґ Р·Р°РІСЏР·РѕС‡РєСѓ..Р° РЅРµ Р·СЂСЏ Р»Рё СЏ РґРµРЅСЊРіРё С‚СЂР°С‡Сѓ?");
             }
             PrintHeroInfo();
             _days++;
