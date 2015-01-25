@@ -63,7 +63,6 @@ namespace cApp.PositiveT.Rpg.Model
             _msg.Write("Из глубоких пучин, из дремучих лесов вышел на тропу войны простой солдат сил тьмы...");
         }
 
-
         public void PrintHeroInfo()
         {
             _msg.Write(String.Format("сводка за день {5}: жизнь={0}/{1}, мощь = {2}, броня = {3}, золото = {4} ", HitPoints,
