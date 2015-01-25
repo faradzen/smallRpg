@@ -7,7 +7,6 @@ namespace cApp.PositiveT.Rpg.Model
 {
     internal class Hero
     {
-
         private readonly IMessenger _msg;
 
         public int HitPointsMax { get; private set; }
@@ -241,6 +240,11 @@ namespace cApp.PositiveT.Rpg.Model
             {
                 HitPoints -= dmg;
             }
+        }
+
+        public int GetDays()
+        {
+            return _days;
         }
     }
 }

@@ -6,44 +6,42 @@ using cApp.PositiveT.Rpg.Model;
 
 namespace cApp.PositiveT.Rpg
 {
-
-    public enum ResponseType
-    {
-        Yes = 'y',
-        No = 'n'
-    }
-
-
-    public enum ActionType
-    {
-        Fight = 'w',
-        BuyWeapon = 'a',
-        BuyArmor = 'd',
-        Heal = 's',
-        Help = 'h',
-        Rest = 'q'
-    }
-
-    static class Keys
-    {
-        public static char[] Actions =
-        {
-            (char) ActionType.Fight, 
-            (char) ActionType.BuyArmor, 
-            (char) ActionType.BuyWeapon,
-            (char) ActionType.Heal,
-            (char) ActionType.Help,
-            (char) ActionType.Rest
-        };
-
-        public static char[] Response =
-        {
-            (char) ResponseType.No, (char) ResponseType.Yes
-        };
-    }
-
     class Program
     {
+        public enum ResponseType
+        {
+            Yes = 'y',
+            No = 'n'
+        }
+
+        public enum ActionType
+        {
+            Fight = 'w',
+            BuyWeapon = 'a',
+            BuyArmor = 'd',
+            Heal = 's',
+            Help = 'h',
+            Rest = 'q'
+        }
+
+        static class Keys
+        {
+            public static readonly char[] Actions =
+            {
+                (char) ActionType.Fight,
+                (char) ActionType.BuyArmor,
+                (char) ActionType.BuyWeapon,
+                (char) ActionType.Heal,
+                (char) ActionType.Help,
+                (char) ActionType.Rest
+            };
+
+            public static char[] Response =
+            {
+                (char) ResponseType.No, (char) ResponseType.Yes
+            };
+        }
+
         static void Main()
         {
             Console.WriteLine("игра: Темный Лес.");
@@ -105,8 +103,8 @@ namespace cApp.PositiveT.Rpg
                 if (hero.IsDead)
                 {
                     Console.WriteLine(
-                        "Герой погиб! Темный властелин в печали, силы Света захватят мир и все потонет в вечном празднике...хотите еще раз помешать торжеству Света? (y/n)");
-                    var response = messenger.ReadSpecificKeys(new[] { 'y', 'n' });
+                        "Дней прошло: {0}. Герой погиб! Темный властелин в печали, силы Света захватят мир и все потонет в вечном празднике...хотите еще раз помешать торжеству Света? (y/n)", hero.GetDays());
+                    var response = messenger.ReadSpecificKeys(Keys.Response);
                     if (response.Equals((char)ResponseType.No))
                     {
                         isEnd = true;
@@ -116,11 +114,7 @@ namespace cApp.PositiveT.Rpg
                         hero.InitHero(heroConfig);
                     }
                 }
-
-                //isEnd = true;
             }
-
-            //end game
             Console.WriteLine("Игра закончена. Лето приближается...");
             Console.ReadKey();
         }
