@@ -82,6 +82,7 @@ namespace cApp.PositiveT.Rpg
                         Console.WriteLine("d - покупка снаряжения.");
                         Console.WriteLine("s - лечиться. В нашей клинике, имени камрада Сидорова, верного сподвижника темного властелина и грозы светлых стай, вы можете излечить даже застарелый склероз!");
                         Console.WriteLine("q - просто и бесплатно отдохнуть на свежем воздухе");
+                        Console.WriteLine("e - сделать что ни будь...бот.");
                         break;
                     case ActionType.BuyArmor:
                         hero.BuyArmor();
